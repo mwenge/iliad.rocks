@@ -111,8 +111,8 @@ function toggleMenu() {
 function showTitle(ignore) {
   var author = titleElements[0];
   var title = titleElements[1];
-  var innerHTML = "<span class=\"author\">" + author + "&nbsp;</span>";
-  innerHTML += "<span class=\"title\">" + title + "</span>";
+  var innerHTML = "<span class=\"author\" onclick=\"toggleMenu()\">" + author + "&nbsp;</span>";
+  innerHTML += "<span class=\"title\" onclick=\"toggleMenu()\">" + title + "</span>";
   innerHTML += "<span class=\"book\" onclick=\"toggleMenu()\">&nbsp;&nbsp;" + book + "</span>";
   masthead.innerHTML = innerHTML;
 }
