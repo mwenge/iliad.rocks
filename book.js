@@ -171,7 +171,7 @@ function displayComment(line) {
 function hideComment() {
   comment.style.display = "none";
 }
-
+/*
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
@@ -183,5 +183,6 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+*/
 
 window.onload = updateScrollPosition;
