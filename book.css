@@ -179,6 +179,23 @@ milestone[ed="P"]:first-letter {
   font-weight: bold;
   margin-left: 6vw;
 }
+.menu {
+  display: none;
+  background-color: ivory;
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%);
+  border-radius: 5px;
+  padding: 25px;
+  z-index: 999999;
+  cursor: pointer;
+  border: 1px black solid;
+  min-width: 80%;
+  font-family: 'IM Fell English', serif;
+  font-size: 4.7vw;
+  font-style: italic;
+}
 .title,.book {
   font-family: 'IM Fell English', serif;
   text-transform: uppercase;
@@ -188,6 +205,9 @@ milestone[ed="P"]:first-letter {
 }
 .book {
   color: black;
+}
+.book-name {
+  color: gray;
 }
 span {
   font-style: italic;

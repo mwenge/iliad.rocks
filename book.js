@@ -12,6 +12,7 @@ function updateScrollPosition() {
   var bookmarkedPage = localStorage.getItem(bookmarkedPageFieldName);
   if (bookmarkedPage == null) {
     localStorage.setItem(bookmarkedPageFieldName, page);
+    return;
   }
 
   var pageOfBook = page.replace(".html", "");
@@ -100,12 +101,19 @@ function updateHelper(evt, lineNumber, translationsForWord) {
   storeScrollPosition();
 }
 
+function toggleMenu() {
+ menu.style.display = (menu.style.display == 'block') ? "none" : "block";
+  var book = titleElements[0] + titleElements[1];
+  var bookmarkedPageFieldName = book + "Page";
+  localStorage.removeItem(bookmarkedPageFieldName);
+}
+
 function showTitle(ignore) {
   var author = titleElements[0];
   var title = titleElements[1];
   var innerHTML = "<span class=\"author\">" + author + "&nbsp;</span>";
   innerHTML += "<span class=\"title\">" + title + "</span>";
-  innerHTML += "<span class=\"book\">&nbsp;&nbsp;" + book + "</span>";
+  innerHTML += "<span class=\"book\" onclick=\"toggleMenu()\">&nbsp;&nbsp;" + book + "</span>";
   masthead.innerHTML = innerHTML;
 }
 
