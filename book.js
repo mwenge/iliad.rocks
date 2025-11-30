@@ -2,37 +2,49 @@ var translations = [];
 var translatedSection = null;
 var current = 0;
 
+function scrollToBookmark(page) {
+  var pageName = page.replace(".html", "");
+  var positionOnPage = pageName + "ScrollPosition";
+  var scrollPosition = localStorage.getItem(positionOnPage);
+  if (scrollPosition == null) {
+    return;
+  }
+  window.scrollTo(0, scrollPosition)
+
+  var lineOnPage = pageName + "LineNumber";
+  var lineNumber = localStorage.getItem(lineOnPage);
+  if (lineNumber) {
+    displayTranslation(lineNumber);
+  }
+}
+
 function updateScrollPosition() {
   var book = titleElements[0] + titleElements[1];
   var path = window.location.pathname;
   var page = path.split("/").pop();
-  console.log(page)
 
   var bookmarkedPageFieldName = book + "Page";
-  var bookmarkedPage = localStorage.getItem(bookmarkedPageFieldName);
-  if (bookmarkedPage == null) {
+  var pageFileName = localStorage.getItem(bookmarkedPageFieldName);
+
+  // If there is no bookmarked page set, set this one as our bookmark
+  // and scroll to the previously stored position on it.
+  if (pageFileName == null) {
     localStorage.setItem(bookmarkedPageFieldName, page);
+    scrollToBookmark(page);
     return;
   }
 
-  var pageOfBook = page.replace(".html", "");
-  var positionOnPage = pageOfBook + "ScrollPosition";
-
-  var scrollPosition = localStorage.getItem(positionOnPage);
-  if (scrollPosition == null) {
-    scrollPosition = window.pageYOffset;
-    localStorage.setItem(positionOnPage, scrollPosition);
+  // If this is the bookmarked page, scroll to the bookmarked position.
+  if (pageFileName == page) {
+    scrollToBookmark(page);
     return;
   }
 
-  if (bookmarkedPage == page) {
-    window.scrollTo(0, scrollPosition)
-    return;
-  }
-  window.location = bookmarkedPage;
+  // Otherwise navigate to the bookmarked page.
+  window.location = pageFileName;
 }
 
-function storeScrollPosition() {
+function storeScrollPosition(lineNumber) {
   var book = titleElements[0] + titleElements[1];
   var path = window.location.pathname;
   var page = path.split("/").pop();
@@ -42,6 +54,8 @@ function storeScrollPosition() {
   var positionOnPage = pageOfBook + "ScrollPosition";
   scrollPosition = window.pageYOffset;
   localStorage.setItem(positionOnPage, scrollPosition);
+  var lineOnPage = pageOfBook + "LineNumber";
+  localStorage.setItem(lineOnPage, lineNumber);
 }
 
 function showNextOnHelper(evt) {
@@ -98,11 +112,13 @@ function updateHelper(evt, lineNumber, translationsForWord) {
     helper.appendChild(transCount);
   }
 
-  storeScrollPosition();
+  storeScrollPosition(lineNumber);
 }
 
 function toggleMenu() {
- menu.style.display = (menu.style.display == 'block') ? "none" : "block";
+  menu.style.display = (menu.style.display == 'block') ? "none" : "block";
+
+  // Clear any current bookmark so we can navigate to the selected page.
   var book = titleElements[0] + titleElements[1];
   var bookmarkedPageFieldName = book + "Page";
   localStorage.removeItem(bookmarkedPageFieldName);
