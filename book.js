@@ -87,7 +87,7 @@ function updateHelper(evt, lineNumber, translationsForWord) {
   }
 
   if (evt.target == updateHelper.currentWord) {
-    if (parallel_translation.style.display == "none") {
+    if (["none",""].includes(parallel_translation.style.display)) {
       displayTranslation(lineNumber);
     } else {
       displayComment(lineNumber);
